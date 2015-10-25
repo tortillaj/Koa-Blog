@@ -32,6 +32,17 @@ import koaBody from "koa-body";
 app.use(koaBody());
 
 /**
+ * Make sure tables exist
+ */
+app.use(function *(next) {
+  let tables = yield r.tableList().run();
+  if (!tables.includes('User')) {
+    yield r.tableCreate('User').run();
+  }
+  yield next;
+});
+
+/**
  * Routes
  */
 import userRoutes from "./user/routes";
