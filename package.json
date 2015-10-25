@@ -1,0 +1,34 @@
+{
+  "name": "koa-blog",
+  "version": "1.0.0",
+  "description": "Blog system made with Koa, RethinkDB, AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js | ./node_modules/koa-bunyan-logger/node_modules/bunyan/bin/bunyan -o short",
+    "test": "NODE_ENV=test mocha $(find api -name 'test.js') --compilers js:babel/register"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "author": "James Cole <mail@ofjamescole.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^5.8.29",
+    "koa": "^1.1.1",
+    "koa-body": "^1.3.0",
+    "koa-bunyan-logger": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-route": "^2.4.2",
+    "koa-router": "^5.2.3",
+    "path": "^0.12.7",
+    "rethinkdb": "^2.1.1",
+    "thinky": "^2.1.9"
+  },
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "co-mocha": "^1.1.2",
+    "co-supertest": "0.0.10",
+    "mocha": "^2.3.3",
+    "supertest": "^1.1.0"
+  }
+}
