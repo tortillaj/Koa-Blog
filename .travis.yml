@@ -1,14 +1,11 @@
 language: node
 node_js:
   - "4.0"
+sudo: false
 services:
   - redis
 install:
   - npm install
-before_install:
-  - sudo add-apt-repository ppa:rethinkdb/ppa -y
-  - sudo apt-get update -qq
-  - sudo apt-get install rethinkdb -y
 before_script:
   - sudo rethinkdb --io-threads 2048 --daemon
   - ulimit -S -n 2048
@@ -17,3 +14,10 @@ script:
   - npm test
 after_script:
   - killall rethinkdb
+addons:
+  apt:
+    sources:
+      - ppa:rethinkdb/ppa
+    packages:
+      - python-software-properties
+      - rethinkdb
