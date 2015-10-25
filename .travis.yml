@@ -1,6 +1,10 @@
 language: node
 node_js:
-  - "4.0.0"
+  - "4.0"
+services:
+  - redis
+install:
+  - npm install
 before_install:
   - sudo add-apt-repository ppa:rethinkdb/ppa -y
   - sudo apt-get update -qq
