@@ -1,23 +1,19 @@
-language: node
+language: node_js
 node_js:
   - "4.0"
-sudo: false
 services:
   - redis
-install:
-  - npm install
+before_install:
+  - source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+  - wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get install rethinkdb -y --force-yes
+  - rethinkdb --version
 before_script:
-  - rethinkdb --io-threads 2048 --daemon
-  - ulimit -S -n 2048
+  - sudo rethinkdb --daemon
+  - npm install
   - sleep 10
 script:
   - npm test
 after_script:
   - killall rethinkdb
-addons:
-  apt:
-    sources:
-      - ppa:rethinkdb/ppa
-    packages:
-      - python-software-properties
-      - rethinkdb
