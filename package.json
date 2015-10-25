@@ -11,7 +11,7 @@
     "node": ">= 4.0.0"
   },
   "author": "James Cole <mail@ofjamescole.com>",
-  "license": "ISC",
+  "license": "GPL-2.0",
   "dependencies": {
     "babel": "^5.8.29",
     "koa": "^1.1.1",
@@ -30,5 +30,20 @@
     "co-supertest": "0.0.10",
     "mocha": "^2.3.3",
     "supertest": "^1.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tortillaj/Koa-Blog.git"
+  },
+  "keywords": [
+    "koajs",
+    "rethinkdb",
+    "thinky",
+    "web",
+    "sockets"
+  ],
+  "bugs": {
+    "url": "https://github.com/tortillaj/Koa-Blog/issues"
+  },
+  "homepage": "https://github.com/tortillaj/Koa-Blog#readme"
 }
