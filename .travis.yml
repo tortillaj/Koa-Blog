@@ -1,0 +1,15 @@
+language: node
+node_js:
+  - "4.0.0"
+before_install:
+  - sudo add-apt-repository ppa:rethinkdb/ppa -y
+  - sudo apt-get update -qq
+  - sudo apt-get install rethinkdb -y
+before_script:
+  - sudo rethinkdb --io-threads 2048 --daemon
+  - ulimit -S -n 2048
+  - sleep 10
+script:
+  - npm test
+after_script:
+  - killall rethinkdb
