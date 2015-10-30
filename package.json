@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js | ./node_modules/koa-bunyan-logger/node_modules/bunyan/bin/bunyan -o short",
-    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha $(find api -name 'test.js') --compilers js:babel/register"
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel/register"
   },
   "engines": {
     "node": ">= 4.0.0"
@@ -14,6 +14,7 @@
   "license": "GPL-2.0",
   "dependencies": {
     "babel": "^5.8.29",
+    "bluebird": "^3.0.2",
     "koa": "^1.1.1",
     "koa-body": "^1.3.0",
     "koa-bunyan-logger": "^1.2.0",
