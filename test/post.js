@@ -13,23 +13,21 @@ const r = thinky.r;
 describe("Post Model -- ", function() {
   let newPost = {};
 
-  before(function *(done) {
+  before(function *() {
     let tableList = yield r.tableList();
     if (!tableList.includes("Post")) {
       yield r.tableCreate("Post").run();
     }
-    done();
+    let dummy = new Post({ title: "Dummy" });
   });
 
-  beforeEach(function *(done) {
+  beforeEach(function *() {
     newPost = { title: "A New Post" };
     yield r.table("Post").delete().run();
-    done();
   });
 
-  afterEach(function *(done) {
+  afterEach(function *() {
     yield r.table("Post").delete().run();
-    done();
   });
 
   it("a new post is instantiated as an object", function *(done) {
