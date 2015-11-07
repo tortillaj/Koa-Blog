@@ -1,17 +1,14 @@
-import config from "../../config";
-import thinky from "../thinky";
+"use strict";
 
+const config    = require("../../config");
+const thinky    = require("../thinky");
 const r         = thinky.r;
 const type      = thinky.type;
 
 const Post = thinky.createModel("Post", {
   id: type.string(),
   title: type.string().default("New Post at " + Date.now()),
-  slug: type.string().default(function() {
-    if (this.title) {
-      return this.title.replace(new RegExp(/[^A-Za-z0-9_]/, "ig"), "-").toLowerCase();
-    }
-  }),
+  slug: type.string(),
   body: type.string(),
   createdAt: type.date().default(function() { return Date.now(); }),
   updatedAt: type.date().default(function() { return Date.now(); })
@@ -28,4 +25,4 @@ Post.pre("save", function(next) {
   next();
 });
 
-export default Post;
+module.exports = Post;

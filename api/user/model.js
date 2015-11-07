@@ -1,8 +1,9 @@
-import config from "../../config";
-import thinky from "../thinky";
+"use strict";
 
-const r = thinky.r;
-const type = thinky.type;
+const config  = require("../../config");
+const thinky  = require("../thinky");
+const r       = thinky.r;
+const type    = thinky.type;
 
 const User = thinky.createModel("User", {
   id: type.string(),
@@ -23,4 +24,4 @@ User.pre("save", function(next) {
   next();
 });
 
-export default User;
+module.exports = User;

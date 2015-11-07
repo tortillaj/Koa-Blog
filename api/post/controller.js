@@ -1,7 +1,9 @@
-import Post from "./model";
-import thinky from "../thinky";
-const r = thinky.r;
-const baseUrl = "/api/post/";
+"use strict";
+
+const Post      = require("./model");
+const thinky    = require("../thinky");
+const r         = thinky.r;
+const baseUrl   = "/api/post/";
 
 const post = {
   list: function *() {
@@ -62,4 +64,4 @@ const post = {
   }
 };
 
-export default post;
+module.exports = post;

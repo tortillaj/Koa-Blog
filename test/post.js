@@ -1,33 +1,43 @@
-import api from "../api";
-import config from "../config";
-import thinky from "../api/thinky";
-import Post from "../api/post/model";
+"use strict";
 
-import assert from "assert";
+require('co-mocha'); 
 
-require('co-mocha');
-
-const request = require('co-supertest').agent(api.listen(3010));
-const r = thinky.r;
+const _           = require("lodash");
+const api         = require("../api");
+const config      = require("../config");
+const thinky      = require("../api/thinky");
+const Post        = require("../api/post/model");
+const assert      = require("assert");
+const request     = require('co-supertest').agent(api.listen(3010));
+const r           = thinky.r;
 
 describe("Post Model -- ", function() {
   let newPost = {};
 
-  before(function *() {
-    let tableList = yield r.tableList();
-    if (!tableList.includes("Post")) {
-      yield r.tableCreate("Post").run();
-    }
-    let dummy = new Post({ title: "Dummy" });
+  before(function *(done) {
+    r.tableCreate("Post").then(function() {
+      let dummy = new Post({ title: "Dummy" });
+      done();
+    });
   });
 
-  beforeEach(function *() {
+  after(function *(done) {
+    r.tableDrop("Post").then(function() {
+      done();
+    });
+  });
+
+  beforeEach(function *(done) {
     newPost = { title: "A New Post" };
-    yield r.table("Post").delete().run();
+    r.table("Post").delete().then(function() {
+      done();
+    });
   });
 
-  afterEach(function *() {
-    yield r.table("Post").delete().run();
+  afterEach(function *(done) {
+    r.table("Post").delete().then(function() {
+      done();
+    });
   });
 
   it("a new post is instantiated as an object", function *(done) {

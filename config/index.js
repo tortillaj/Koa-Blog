@@ -1,9 +1,7 @@
-import apiConfig from "./api";
-import envConfig from "./env";
-import koaConfig from "./koa";
+"use strict";
 
-export default {
-  api: apiConfig,
-  env: envConfig,
-  koa: koaConfig
-}
+module.exports = {
+  api: require("./api"),
+  env: require("./env"),
+  koa: require("./koa")
+};

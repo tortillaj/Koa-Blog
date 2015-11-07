@@ -1,7 +1,9 @@
-import User from "./model";
-import thinky from "../thinky";
-const r = thinky.r;
-const baseUrl = "/api/user/";
+"use strict";
+
+const User      = require("./model");
+const thinky    = require("../thinky");
+const r         = thinky.r;
+const baseUrl   = "/api/user/";
 
 const user = {
   list: function *() {
@@ -62,4 +64,4 @@ const user = {
   }
 };
 
-export default user;
+module.exports = user;

@@ -1,7 +1,8 @@
-import Router from "koa-router";
-import UserController from "./controller";
+"use strict";
 
-const userRoutes = new Router({
+const Router          = require("koa-router");
+const UserController  = require("./controller");
+const userRoutes      = new Router({
   prefix: "/api/user"
 });
 
@@ -11,4 +12,4 @@ userRoutes.post("/", UserController.create);
 userRoutes.put("/:id", UserController.update);
 userRoutes.delete("/:id", UserController.delete);
 
-export default userRoutes;
+module.exports = userRoutes;

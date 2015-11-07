@@ -1,14 +1,14 @@
-import api from "../api";
-import config from "../config";
-import thinky from "../api/thinky";
-import User from "../api/user/model";
+"use strict";
 
-import assert from "assert";
+require('co-mocha'); 
 
-require('co-mocha');
-
-const request = require('co-supertest').agent(api.listen(config.koa.port));
-const r = thinky.r;
+const api       = require("../api");
+const config    = require("../config");
+const thinky    = require("../api/thinky");
+const User      = require("../api/user/model");
+const assert    = require("assert");
+const request   = require('co-supertest').agent(api.listen(config.koa.port));
+const r         = thinky.r;
 
 describe("User Model -- ", function() {
   let newUser;
@@ -16,9 +16,9 @@ describe("User Model -- ", function() {
   before(function *() {
     // make sure table exists
     let tableList = yield r.tableList();
-    if (!tableList.includes("User")) {
-      yield r.tableCreate("User").run();
-    }
+    //if (!tableList.includes("User")) {
+      //yield r.tableCreate("User").run();
+    //}
 
     // setup user for testing
     newUser = new User({ firstName: "James", lastName: "Cole" });

@@ -1,5 +1,6 @@
-import env from "./env";
+"use strict";
 
+const env = require("./env");
 module.exports = {
   port: process.env.PORT || 3000,
   cors: {

@@ -1,5 +1,6 @@
-import apiConfig from "./api";
+"use strict";
 
+const apiConfig       = require("./api");
 const appEnvironments = {
   development: {
     cacheTime: 60 * 60 * 1000,
@@ -27,4 +28,4 @@ const appEnvironments = {
   }
 };
 
-export default appEnvironments[apiConfig.env];
+module.exports =  appEnvironments[apiConfig.env];

@@ -1,13 +1,15 @@
-import config from "../config";
-import thinky from "./thinky";
-import koa from "koa";
-const app = koa();
-const r   = thinky.r;
+"use strict";
+
+const config    = require("../config");
+const thinky    = require("./thinky");
+const koa       = require("koa");
+const app       = koa();
+const r         = thinky.r;
 
 /**
  * Logging
  */
-import logger from "koa-bunyan-logger";
+const logger = require("koa-bunyan-logger");
 //app.use(logger());
 //app.use(logger.requestLogger());
 if (config.api.env !== "test") {
@@ -22,21 +24,21 @@ if (config.api.env !== "test") {
 /**
  * CORS
  */
-import cors from "koa-cors";
+const cors = require("koa-cors");
 app.use(cors(config.koa.cors));
 
 /**
  * Body Parse
  */
-import koaBody from "koa-body";
+const koaBody = require("koa-body");
 app.use(koaBody());
 
 /**
  * Routes
  */
-import userRoutes from "./user/routes";
+const userRoutes = require("./user/routes");
 app.use(userRoutes.routes());
-import postRoutes from "./post/routes";
+const postRoutes = require("./post/routes");
 app.use(postRoutes.routes());
 
-export default app;
+module.exports = app;

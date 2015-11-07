@@ -1,7 +1,8 @@
-import Router from "koa-router";
-import PostController from "./controller";
- 
-const postRoutes = new Router({
+"use strict";
+
+const Router          = require("koa-router");
+const PostController  = require("./controller");
+const postRoutes      = new Router({
   prefix: "/api/post"
 });
 
@@ -11,4 +12,4 @@ postRoutes.post("/", PostController.create);
 postRoutes.put("/:id", PostController.update);
 postRoutes.delete("/:id", PostController.delete);                                                                               
 
-export default postRoutes;
+module.exports = postRoutes;
