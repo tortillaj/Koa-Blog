@@ -1,3 +1,5 @@
+coverage
+.coveralls.yml
 .idea
 node_modules
 *.log
