@@ -13,23 +13,20 @@ const r         = thinky.r;
 describe("User Model -- ", function() {
   let newUser;
 
-  before(function *() {
-    // make sure table exists
-    let tableList = yield r.tableList();
-    //if (!tableList.includes("User")) {
-      //yield r.tableCreate("User").run();
-    //}
+  before(function *(done) {
+    yield thinky.models["User"].ready();
+    done();
+  });
 
-    // setup user for testing
+  beforeEach(function *(done) {
     newUser = new User({ firstName: "James", lastName: "Cole" });
+    yield r.table("User").delete();
+    done();
   });
 
-  beforeEach(function *() {
-    yield r.table("User").delete().run();
-  });
-
-  afterEach(function *() {
-    yield r.table("User").delete().run();
+  afterEach(function *(done) {
+    yield r.table("User").delete();
+    done();
   });
 
   it("a new user is instantiated as an object", function *(done) {

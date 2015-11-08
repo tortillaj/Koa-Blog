@@ -12,32 +12,23 @@ const request     = require('co-supertest').agent(api.listen(3010));
 const r           = thinky.r;
 
 describe("Post Model -- ", function() {
+  this.timeout(10000);
   let newPost = {};
 
   before(function *(done) {
-    r.tableCreate("Post").then(function() {
-      let dummy = new Post({ title: "Dummy" });
-      done();
-    });
-  });
-
-  after(function *(done) {
-    r.tableDrop("Post").then(function() {
-      done();
-    });
+    yield thinky.models["Post"].ready();
+    done();
   });
 
   beforeEach(function *(done) {
-    newPost = { title: "A New Post" };
-    r.table("Post").delete().then(function() {
-      done();
-    });
+    newPost = new Post({ title: "A New Post" });
+    yield r.table("Post").delete();
+    done();
   });
 
   afterEach(function *(done) {
-    r.table("Post").delete().then(function() {
-      done();
-    });
+    yield r.table("Post").delete();
+    done();
   });
 
   it("a new post is instantiated as an object", function *(done) {
@@ -46,7 +37,6 @@ describe("Post Model -- ", function() {
   });
 
   it("should store properties sent to it upon instantiation", function *(done) {
-    newPost = new Post({ title: "A New Post" });
     assert.equal(newPost.title, "A New Post");
     done();
   });
@@ -65,7 +55,6 @@ describe("Post Model -- ", function() {
   });
 
   it("should fetch a post by id", function *(done) {
-    newPost = new Post({ title: "A New Post" });
     let savedPost = yield newPost.save();
     yield request
       .get("/api/post/" + savedPost.id)
@@ -79,7 +68,6 @@ describe("Post Model -- ", function() {
   });
 
   it("should update a post", function *(done) {
-    newPost = new Post({ title: "A New Post" });
     let savedPost = yield newPost.save();
     yield request
       .put("/api/post/" + savedPost.id)
@@ -94,7 +82,6 @@ describe("Post Model -- ", function() {
   });
 
   it("should delete a post", function *(done) {
-    newPost = new Post({ title: "A New Post" });
     let savedPost = yield newPost.save();
     yield request
       .delete("/api/post/" + savedPost.id)

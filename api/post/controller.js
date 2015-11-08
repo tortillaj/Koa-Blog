@@ -37,6 +37,7 @@ const post = {
       this.set("Location", baseUrl + this.body.id);
       this.status = 201;
     } catch(err) {
+      console.log("ERROR", err);
       this.body = { error: err };
       this.status = 500;
     }

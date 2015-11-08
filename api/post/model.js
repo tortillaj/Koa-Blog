@@ -20,7 +20,7 @@ Post.ensureIndex("createdAt");
 Post.pre("save", function(next) {
   this.updatedAt = Date.now();
   if (this.title) {
-    this.slug = this.title.replace(new RegExp(/[^A-Za-z0-9_]/, "ig"), "-").toLowerCase();
+    this.slug = this.title.replace(/[^A-Za-z0-9_]/ig, "-").toLowerCase();
   }
   next();
 });
