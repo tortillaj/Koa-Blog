@@ -3,6 +3,7 @@
 const User      = require("./model");
 const thinky    = require("../thinky");
 const r         = thinky.r;
+const handle    = require("../handlers");
 const baseUrl   = "/api/user/";
 
 const user = {
@@ -11,23 +12,17 @@ const user = {
       this.body = yield User.orderBy({index: r.desc("firstName")});
       this.status = 200;
     } catch(err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   get: function *() {
     try {
       let user = yield User.get(this.params.id);
-      if (user) {
-        this.body = user;
-        this.set("Location", baseUrl + this.params.id);
-        this.status = 200;
-      } else {
-        this.status = 400;
-      }
+      this.body = user;
+      this.set("Location", baseUrl + this.params.id);
+      this.status = 200;
     } catch(err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   create: function *() {
@@ -37,8 +32,7 @@ const user = {
       this.set("Location", baseUrl + this.body.id);
       this.status = 201;
     } catch(err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   update: function *() {
@@ -49,8 +43,7 @@ const user = {
       this.set("Location", baseUrl + this.params.id);
       this.status = 200;
     } catch (err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     } 
   },
   delete: function *() {
@@ -58,8 +51,7 @@ const user = {
       let deleted = yield User.get(this.params.id).delete();
       this.status = 204;
     } catch (err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   }
 };

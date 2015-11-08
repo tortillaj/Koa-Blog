@@ -67,6 +67,14 @@ describe("Post Model -- ", function() {
     done();
   });
 
+  it("should 404 if a post is not found", function *(done) {
+    yield request
+      .get("/api/post/123")
+      .expect(404)
+      .end();
+    done();
+  });
+
   it("should update a post", function *(done) {
     let savedPost = yield newPost.save();
     yield request

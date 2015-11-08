@@ -14,7 +14,7 @@ before_script:
   - npm install
   - sleep 10
 script:
-  - npm coverage
+  - npm run coverage
 after_script:
   - killall rethinkdb
   - ./node_modules/.bin/coveralls < ./coverage/lcov.info

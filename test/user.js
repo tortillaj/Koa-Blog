@@ -68,6 +68,14 @@ describe("User Model -- ", function() {
     done();
   });
 
+  it("should 404 if a user is not found", function *(done) {
+    yield request
+      .get("/api/user/123")
+      .expect(404)
+      .end();
+    done();
+  });
+
   it("should update a user", function *(done) {
     let savedUser = yield newUser.save();
     yield request

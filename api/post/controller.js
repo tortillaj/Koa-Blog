@@ -3,6 +3,7 @@
 const Post      = require("./model");
 const thinky    = require("../thinky");
 const r         = thinky.r;
+const handle    = require("../handlers");
 const baseUrl   = "/api/post/";
 
 const post = {
@@ -11,23 +12,17 @@ const post = {
       this.body = yield Post.orderBy({index: r.desc("createdAt")});
       this.status = 200;
     } catch(err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   get: function *() {
     try {
       let post = yield Post.get(this.params.id);
-      if (post) {
-        this.body = post;
-        this.set("Location", baseUrl + this.params.id);
-        this.status = 200;
-      } else {
-        this.status = 404;
-      }
+      this.body = post;
+      this.set("Location", baseUrl + this.params.id);
+      this.status = 200;
     } catch(err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   create: function *() {
@@ -37,9 +32,7 @@ const post = {
       this.set("Location", baseUrl + this.body.id);
       this.status = 201;
     } catch(err) {
-      console.log("ERROR", err);
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   },
   update: function *() {
@@ -50,8 +43,7 @@ const post = {
       this.set("Location", baseUrl + this.params.id);
       this.status = 200;
     } catch (err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     } 
   },
   delete: function *() {
@@ -59,8 +51,7 @@ const post = {
       let deleted = yield Post.get(this.params.id).delete();
       this.status = 204;
     } catch (err) {
-      this.body = { error: err };
-      this.status = 500;
+      handle.error(err);
     }
   }
 };
