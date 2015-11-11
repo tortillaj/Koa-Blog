@@ -5,12 +5,12 @@ module.exports = function(thinky) {
 
   const User = thinky.createModel("User", {
     id: type.string(),
-    firstName: type.string(),
+    firstName: type.string().required(),
     lastName: type.string(),
     displayName: type.string().default(function () {
       return this.firstName + ' ' + this.lastName;
     }),
-    email: type.string(),
+    email: type.string().required(),
     website: type.string(),
     createdAt: type.date().default(function () {
       return Date.now();

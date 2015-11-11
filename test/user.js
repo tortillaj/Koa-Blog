@@ -17,7 +17,11 @@ describe("User Model -- ", function() {
   });
 
   beforeEach(function *(done) {
-    newUser = new Models.models.User({ firstName: "James", lastName: "Cole" });
+    newUser = new Models.models.User({
+      firstName: "James",
+      lastName: "Cole",
+      email: "james@cole.com"
+    });
     yield Models.r.table("User").delete();
     done();
   });
@@ -70,6 +74,7 @@ describe("User Model -- ", function() {
       .expect(function(response) {
         assert.equal(savedUser.firstName, response.body.firstName);                                                                     
         assert.equal(savedUser.lastName, response.body.lastName);
+        assert.equal(savedUser.email, response.body.email);
       })
       .end();
     done();
@@ -97,11 +102,30 @@ describe("User Model -- ", function() {
     done();
   });
 
+  it("should error if the user cannot be found when trying to update", function *(done) {
+    yield request
+      .put("/api/user/123")
+      .send({ firstName: "Tom" })
+      .expect(404)
+      .end();
+    done();
+  });
+
   it("should delete a user", function *(done) {
-    let savedUser = yield newUser.save();  
-    yield request  
-      .delete("/api/user/" + savedUser.id)
-      .expect(204)
+    let savedUser = yield newUser.save();
+    try {
+      yield request
+        .delete("/api/user/" + savedUser.id)
+        .expect(204)
+        .end();
+    } catch(err) {}
+    done();
+  });
+
+  it("should error if the user cannot be found when trying to delete", function *(done) {
+    yield request
+      .delete("/api/user/123")
+      .expect(404)
       .end();
     done();
   });

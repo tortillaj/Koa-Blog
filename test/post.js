@@ -101,11 +101,28 @@ describe("Post Model -- ", function() {
     done();
   });
 
+  it("should error if the post cannot be found when trying to update", function *(done) {
+    yield request
+      .put("/api/post/123")
+      .send({ title: "Updated Post Title"  })
+      .expect(404)
+      .end();
+    done();
+  });
+
   it("should delete a post", function *(done) {
     let savedPost = yield newPost.save();
     yield request
       .delete("/api/post/" + savedPost.id)
       .expect(204)
+      .end();
+    done();
+  });
+
+  it("should error if the post cannot be found when trying to delete", function *(done) {
+    yield request
+      .delete("/api/post/123")
+      .expect(404)
       .end();
     done();
   });

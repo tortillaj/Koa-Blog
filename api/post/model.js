@@ -6,7 +6,7 @@ module.exports = function(thinky) {
   const Post = thinky.createModel("Post", {
     id: type.string(),
     idAuthor: type.string(),
-    title: type.string().default("New Post at " + Date.now()),
+    title: type.string().default("New Post at " + Date.now()).required(),
     slug: type.string(),
     body: type.string(),
     createdAt: type.date().default(function() { return Date.now(); }),
