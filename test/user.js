@@ -9,6 +9,7 @@ const assert    = require("assert");
 const request   = require('co-supertest').agent(api.listen(config.koa.port));
 
 describe("User Model -- ", function() {
+  this.timeout(10000);
   let newUser;
 
   before(function *(done) {

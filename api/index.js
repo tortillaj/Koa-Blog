@@ -34,9 +34,8 @@ app.use(koaBody());
 /**
  * Routes
  */
-const userRoutes = require("./user/routes");
-app.use(userRoutes.routes());
-const postRoutes = require("./post/routes");
-app.use(postRoutes.routes());
+app.use(require("./user/routes").routes());
+app.use(require("./post/routes").routes());
+app.use(require("./file/routes").routes());
 
 module.exports = app;
