@@ -4,28 +4,26 @@ require('co-mocha');
 
 const api       = require("../api");
 const config    = require("../config");
-const thinky    = require("../api/thinky");
-const User      = require("../api/user/model");
+const Models    = require("../api/models");
 const assert    = require("assert");
 const request   = require('co-supertest').agent(api.listen(config.koa.port));
-const r         = thinky.r;
 
 describe("User Model -- ", function() {
   let newUser;
 
   before(function *(done) {
-    yield thinky.models["User"].ready();
+    //yield Models.User.ready();
     done();
   });
 
   beforeEach(function *(done) {
-    newUser = new User({ firstName: "James", lastName: "Cole" });
-    yield r.table("User").delete();
+    newUser = new Models.models.User({ firstName: "James", lastName: "Cole" });
+    yield Models.r.table("User").delete();
     done();
   });
 
   afterEach(function *(done) {
-    yield r.table("User").delete();
+    yield Models.r.table("User").delete();
     done();
   });
 

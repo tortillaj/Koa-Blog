@@ -1,10 +1,8 @@
 "use strict";
 
 const config    = require("../config");
-const thinky    = require("./thinky");
 const koa       = require("koa");
 const app       = koa();
-const r         = thinky.r;
 
 /**
  * Logging

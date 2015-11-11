@@ -5,29 +5,31 @@ require('co-mocha');
 const _           = require("lodash");
 const api         = require("../api");
 const config      = require("../config");
-const thinky      = require("../api/thinky");
-const Post        = require("../api/post/model");
+const Models      = require("../api/models");
 const assert      = require("assert");
 const request     = require('co-supertest').agent(api.listen(3010));
-const r           = thinky.r;
 
 describe("Post Model -- ", function() {
   this.timeout(10000);
   let newPost = {};
+  let newPostAuthor = {};
 
   before(function *(done) {
-    yield thinky.models["Post"].ready();
+    //yield Models.User.ready();
+    //yield Models.Post.ready();
     done();
   });
 
   beforeEach(function *(done) {
-    newPost = new Post({ title: "A New Post" });
-    yield r.table("Post").delete();
+    newPost = new Models.models.Post({ title: "A New Post" });
+    newPostAuthor = new Models.models.User({ firstName: "James", "lastName": "Cole" });
+    newPost.author = newPostAuthor;
+    yield Models.r.table("Post").delete();
     done();
   });
 
   afterEach(function *(done) {
-    yield r.table("Post").delete();
+    yield Models.r.table("Post").delete();
     done();
   });
 
@@ -48,6 +50,7 @@ describe("Post Model -- ", function() {
       .expect(201)
       .expect("Location",  /^\/api\/post\/[a-zA-Z0-9-_]{36}$/)
       .expect(function(response) {
+        assert.equal(response.body.author.firstName, newPostAuthor.firstName);
         assert.equal(response.body.title, newPost.title);
       })
       .end();

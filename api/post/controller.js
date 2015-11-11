@@ -1,15 +1,13 @@
 "use strict";
 
-const Post      = require("./model");
-const thinky    = require("../thinky");
-const r         = thinky.r;
+const Models    = require("../models");
 const handle    = require("../handlers");
 const baseUrl   = "/api/post/";
 
 const post = {
   list: function *() {
     try {
-      this.body = yield Post.orderBy({index: r.desc("createdAt")});
+      this.body = yield Models.models.Post.orderBy({index: r.desc("createdAt")});
       this.status = 200;
     } catch(err) {
       handle.error(err);
@@ -17,7 +15,7 @@ const post = {
   },
   get: function *() {
     try {
-      let post = yield Post.get(this.params.id);
+      let post = yield Models.models.Post.get(this.params.id);
       this.body = post;
       this.set("Location", baseUrl + this.params.id);
       this.status = 200;
@@ -27,7 +25,7 @@ const post = {
   },
   create: function *() {
     try {
-      let newPost = new Post(this.request.body);
+      let newPost = new Models.models.Post(this.request.body);
       this.body = yield newPost.save();
       this.set("Location", baseUrl + this.body.id);
       this.status = 201;
@@ -38,7 +36,7 @@ const post = {
   update: function *() {
     try {
       let data = this.request.body;
-      let post = yield Post.get(this.params.id);
+      let post = yield Models.models.Post.get(this.params.id);
       this.body = yield post.merge(data).save();
       this.set("Location", baseUrl + this.params.id);
       this.status = 200;
@@ -48,7 +46,7 @@ const post = {
   },
   delete: function *() {
     try {
-      let deleted = yield Post.get(this.params.id).delete();
+      let deleted = yield Models.models.Post.get(this.params.id).delete();
       this.status = 204;
     } catch (err) {
       handle.error(err);
