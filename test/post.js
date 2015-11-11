@@ -15,8 +15,8 @@ describe("Post Model -- ", function() {
   let newPostAuthor = {};
 
   before(function *(done) {
-    //yield Models.User.ready();
-    //yield Models.Post.ready();
+    yield Models.models.User.ready();
+    yield Models.models.Post.ready();
     done();
   });
 

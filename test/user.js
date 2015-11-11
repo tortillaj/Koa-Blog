@@ -12,7 +12,7 @@ describe("User Model -- ", function() {
   let newUser;
 
   before(function *(done) {
-    //yield Models.User.ready();
+    yield Models.models.User.ready();
     done();
   });
 
