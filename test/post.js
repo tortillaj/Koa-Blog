@@ -43,6 +43,15 @@ describe("Post Model -- ", function() {
     done();
   });
 
+  it("should list all posts", function *(done) {
+    yield newPost.save();
+    yield request
+      .get("/api/post")
+      .expect(200)
+      .end();
+    done();
+  });
+
   it("should create a post with properties matching the POSTed object", function *(done) { 
     yield request
       .post("/api/post/")

@@ -38,6 +38,15 @@ describe("User Model -- ", function() {
     done();
   });
 
+  it("should list all users", function *(done) {
+    yield newUser.save();
+    yield request
+      .get("/api/user")
+      .expect(200)
+      .end();
+    done();
+  });
+
   it("should create a user with properties matching the POSTed object", function *(done) { 
     yield request
       .post("/api/user/")

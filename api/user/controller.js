@@ -5,13 +5,15 @@ const handle    = require("../handlers");
 const baseUrl   = "/api/user/";
 
 const user = {
-  list: function *() {
+  list: function *(next) {
     try {
-      this.body = yield Models.models.User.orderBy({index: r.desc("firstName")});
+      this.body = yield Models.models.User.orderBy({index: Models.r.desc("firstName")});
+      this.set("Location", baseUrl);
       this.status = 200;
     } catch(err) {
       handle.error(err);
     }
+    yield next;
   },
   get: function *() {
     try {

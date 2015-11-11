@@ -7,7 +7,8 @@ const baseUrl   = "/api/post/";
 const post = {
   list: function *() {
     try {
-      this.body = yield Models.models.Post.orderBy({index: r.desc("createdAt")});
+      this.body = yield Models.models.Post.orderBy({index: Models.r.desc("createdAt")});
+      this.set("Location", baseUrl);
       this.status = 200;
     } catch(err) {
       handle.error(err);
